@@ -1,0 +1,7 @@
+name = "advent_of_code_2022"
+version = "0.1.0"
+
+[dependencies]
+gleam_stdlib = "~> 0.25"
+gleam_erlang = "~> 0.17"
+glint = "~> 0.10"
