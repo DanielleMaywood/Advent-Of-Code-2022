@@ -6,14 +6,14 @@ import gleam/erlang/file
 import gleam/erlang.{start_arguments}
 import glint
 
-pub fn split_by_elve(in calories) {
-  let #(elve, remaining) =
+pub fn split_by_elf(in calories) {
+  let #(elf, remaining) =
     calories
     |> list.split_while(fn(elem) { !string.is_empty(elem) })
 
   case list.rest(remaining) {
-    Ok([]) | Error(Nil) -> [elve]
-    Ok(rest) -> [elve, ..split_by_elve(rest)]
+    Ok([]) | Error(Nil) -> [elf]
+    Ok(rest) -> [elf, ..split_by_elf(rest)]
   }
 }
 
@@ -24,12 +24,12 @@ pub fn day1(_) {
     contents
     |> string.split(on: "\n")
 
-  assert Ok(calories_per_elve) =
+  assert Ok(calories_per_elf) =
     calories_list
-    |> split_by_elve
-    |> list.try_map(fn(elve) {
+    |> split_by_elf
+    |> list.try_map(fn(elf) {
       try parsed_calories =
-        elve
+        elf
         |> list.try_map(int.parse)
 
       parsed_calories
@@ -37,11 +37,11 @@ pub fn day1(_) {
     })
 
   let sorted_calories =
-    calories_per_elve
+    calories_per_elf
     |> list.sort(int.compare)
     |> list.reverse()
 
-  // Top elve
+  // Top elf
   assert Ok(top) = list.at(sorted_calories, 0)
 
   io.debug(top)
