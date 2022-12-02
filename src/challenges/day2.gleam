@@ -24,10 +24,10 @@ pub fn solution(_) {
         "Z" -> 3
       }
 
-      case #(opponent, self) {
-        #("A", "Y") | #("B", "Z") | #("C", "X") -> 6 + shape_score
-        #("A", "X") | #("B", "Y") | #("C", "Z") -> 3 + shape_score
-        #("A", "Z") | #("B", "X") | #("C", "Y") -> 0 + shape_score
+      case opponent, self {
+        "A", "Y" | "B", "Z" | "C", "X" -> 6 + shape_score
+        "A", "X" | "B", "Y" | "C", "Z" -> 3 + shape_score
+        "A", "Z" | "B", "X" | "C", "Y" -> 0 + shape_score
       }
     })
     |> int.sum
@@ -39,14 +39,14 @@ pub fn solution(_) {
     |> list.map(fn(round) {
       let [opponent, round_status] = round
 
-      let self = case #(opponent, round_status) {
-        #("A", "X") -> "C"
-        #("B", "X") -> "A"
-        #("C", "X") -> "B"
-        #(shape, "Y") -> shape
-        #("A", "Z") -> "B"
-        #("B", "Z") -> "C"
-        #("C", "Z") -> "A"
+      let self = case opponent, round_status {
+        "A", "X" -> "C"
+        "B", "X" -> "A"
+        "C", "X" -> "B"
+        shape, "Y" -> shape
+        "A", "Z" -> "B"
+        "B", "Z" -> "C"
+        "C", "Z" -> "A"
       }
 
       let game_score = case round_status {
