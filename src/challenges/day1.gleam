@@ -15,14 +15,12 @@ pub fn solution(_) {
       elf
       |> string.split(on: "\n")
       |> list.try_map(int.parse)
-      |> result.map(list.reduce(_, int.add))
-      |> result.flatten()
+      |> result.map(int.sum)
     })
 
   let sorted_calories =
     calories_per_elf
-    |> list.sort(int.compare)
-    |> list.reverse()
+    |> list.sort(fn(lhs, rhs) { int.compare(rhs, lhs) })
 
   // Top elf
   assert Ok(top) = list.at(sorted_calories, 0)
@@ -30,10 +28,10 @@ pub fn solution(_) {
   io.debug(top)
 
   // Top three
-  assert Ok(top3) =
+  let top3 =
     sorted_calories
     |> list.take(3)
-    |> list.reduce(int.add)
+    |> int.sum
 
   io.debug(top3)
 

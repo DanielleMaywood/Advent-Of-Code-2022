@@ -13,7 +13,7 @@ pub fn solution(_) {
     |> list.filter(fn(round) { !string.is_empty(round) })
     |> list.map(string.split(_, on: " "))
 
-  assert Ok(score) =
+  let score =
     strategy
     |> list.map(fn(round) {
       let [opponent, self] = round
@@ -30,11 +30,11 @@ pub fn solution(_) {
         #("A", "Z") | #("B", "X") | #("C", "Y") -> 0 + shape_score
       }
     })
-    |> list.reduce(int.add)
+    |> int.sum
 
   io.debug(score)
 
-  assert Ok(score) =
+  let score =
     strategy
     |> list.map(fn(round) {
       let [opponent, round_status] = round
@@ -63,7 +63,7 @@ pub fn solution(_) {
 
       game_score + shape_score
     })
-    |> list.reduce(int.add)
+    |> int.sum
 
   io.debug(score)
 
