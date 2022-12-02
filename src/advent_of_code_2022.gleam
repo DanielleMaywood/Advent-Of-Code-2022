@@ -6,30 +6,19 @@ import gleam/erlang/file
 import gleam/erlang.{start_arguments}
 import glint
 
-pub fn split_by_elf(in calories) {
-  let #(elf, remaining) =
-    calories
-    |> list.split_while(fn(elem) { !string.is_empty(elem) })
-
-  case list.rest(remaining) {
-    Ok([]) | Error(Nil) -> [elf]
-    Ok(rest) -> [elf, ..split_by_elf(rest)]
-  }
-}
-
 pub fn day1(_) {
   assert Ok(contents) = file.read("data/day1/calories.txt")
 
   let calories_list =
     contents
-    |> string.split(on: "\n")
+    |> string.split(on: "\n\n")
 
   assert Ok(calories_per_elf) =
     calories_list
-    |> split_by_elf
     |> list.try_map(fn(elf) {
       try parsed_calories =
         elf
+        |> string.split(on: "\n")
         |> list.try_map(int.parse)
 
       parsed_calories
