@@ -2,27 +2,23 @@ import gleam/io
 import gleam/int
 import gleam/list
 import gleam/string
+import gleam/result
 import gleam/erlang/file
 import gleam/erlang.{start_arguments}
 import glint
 
 pub fn day1(_) {
-  assert Ok(contents) = file.read("data/day1/calories.txt")
-
-  let calories_list =
-    contents
-    |> string.split(on: "\n\n")
+  assert Ok(calories) = file.read("data/day1/calories.txt")
 
   assert Ok(calories_per_elf) =
-    calories_list
+    calories
+    |> string.split(on: "\n\n")
     |> list.try_map(fn(elf) {
-      try parsed_calories =
-        elf
-        |> string.split(on: "\n")
-        |> list.try_map(int.parse)
-
-      parsed_calories
-      |> list.reduce(int.add)
+      elf
+      |> string.split(on: "\n")
+      |> list.try_map(int.parse)
+      |> result.map(list.reduce(_, int.add))
+      |> result.flatten()
     })
 
   let sorted_calories =
