@@ -7,11 +7,9 @@ import gleam/set
 import gleam/io
 
 fn priority(item) {
-  assert <<v>> = bit_string.from_string(item)
-
-  case v {
-    _ if v >= 97 && v <= 122 -> v - 97 + 1
-    _ if v >= 65 && v <= 90 -> v - 65 + 27
+  case bit_string.from_string(item) {
+    <<v>> if v >= 97 && v <= 122 -> v - 97 + 1
+    <<v>> if v >= 65 && v <= 90 -> v - 65 + 27
   }
 }
 
