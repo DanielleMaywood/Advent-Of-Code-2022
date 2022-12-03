@@ -2,6 +2,7 @@ import gleam/erlang.{start_arguments}
 import glint
 import challenges/day1
 import challenges/day2
+import challenges/day3
 
 pub fn main() {
   glint.new()
@@ -17,6 +18,12 @@ pub fn main() {
     do: day2.solution,
     with: [],
     described: "Day 2 Challenge",
+  )
+  |> glint.add_command(
+    at: ["day3"],
+    do: day3.solution,
+    with: [],
+    described: "Day 3 Challenge",
   )
   |> glint.run(start_arguments())
 }
