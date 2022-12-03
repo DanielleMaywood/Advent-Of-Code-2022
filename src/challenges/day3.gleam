@@ -18,8 +18,8 @@ pub fn solution(_) {
 
   let rucksacks =
     input
+    |> string.trim
     |> string.split(on: "\n")
-    |> list.filter(fn(rucksack) { !string.is_empty(rucksack) })
 
   let priority_sum =
     rucksacks
