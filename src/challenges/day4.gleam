@@ -9,11 +9,9 @@ pub fn part1(assignments: List(#(#(Int, Int), #(Int, Int)))) {
   |> list.filter(fn(bounds) {
     let #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper)) = bounds
 
-    case lhs_lower, rhs_lower, lhs_upper, rhs_upper {
-      _, _, _, _ if lhs_lower >= rhs_lower && lhs_upper <= rhs_upper -> True
-      _, _, _, _ if rhs_lower >= lhs_lower && rhs_upper <= lhs_upper -> True
-      _, _, _, _ -> False
-    }
+    let overlap = lhs_lower >= rhs_lower && lhs_upper <= rhs_upper
+    let overlap = overlap || rhs_lower >= lhs_lower && rhs_upper <= lhs_upper
+    overlap
   })
   |> list.length
 }
@@ -23,15 +21,13 @@ pub fn part2(assignments: List(#(#(Int, Int), #(Int, Int)))) {
   |> list.filter(fn(bounds) {
     let #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper)) = bounds
 
-    case lhs_lower, rhs_lower, lhs_upper, rhs_upper {
-      _, _, _, _ if lhs_lower >= rhs_lower && lhs_upper <= rhs_upper -> True
-      _, _, _, _ if rhs_lower >= lhs_lower && rhs_upper <= lhs_upper -> True
-      _, _, _, _ if lhs_lower >= rhs_lower && lhs_lower <= rhs_upper -> True
-      _, _, _, _ if rhs_lower >= lhs_lower && rhs_lower <= lhs_upper -> True
-      _, _, _, _ if lhs_upper >= rhs_lower && lhs_upper <= rhs_upper -> True
-      _, _, _, _ if rhs_upper >= lhs_lower && rhs_upper <= lhs_upper -> True
-      _, _, _, _ -> False
-    }
+    let overlap = lhs_lower >= rhs_lower && lhs_upper <= rhs_upper
+    let overlap = overlap || lhs_lower >= rhs_lower && lhs_lower <= rhs_upper
+    let overlap = overlap || lhs_upper >= rhs_lower && lhs_upper <= rhs_upper
+    let overlap = overlap || rhs_lower >= lhs_lower && rhs_upper <= lhs_upper
+    let overlap = overlap || rhs_lower >= lhs_lower && rhs_lower <= lhs_upper
+    let overlap = overlap || rhs_upper >= lhs_lower && rhs_upper <= lhs_upper
+    overlap
   })
   |> list.length
 }
