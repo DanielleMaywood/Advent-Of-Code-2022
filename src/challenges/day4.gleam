@@ -1,21 +1,13 @@
 import gleam/erlang/file
 import gleam/string
 import gleam/list
-import gleam/bool
 import gleam/int
 import gleam/io
 
-pub fn part1(pairs: List(String)) {
-  pairs
-  |> list.map(fn(pair) {
-    assert [[Ok(lhs_lower), Ok(lhs_upper)], [Ok(rhs_lower), Ok(rhs_upper)]] =
-      pair
-      |> string.split(on: ",")
-      |> list.map(fn(bounds) {
-        bounds
-        |> string.split(on: "-")
-        |> list.map(int.parse)
-      })
+pub fn part1(assignments: List(#(#(Int, Int), #(Int, Int)))) {
+  assignments
+  |> list.filter(fn(bounds) {
+    let #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper)) = bounds
 
     case lhs_lower, rhs_lower, lhs_upper, rhs_upper {
       _, _, _, _ if lhs_lower >= rhs_lower && lhs_upper <= rhs_upper -> True
@@ -23,21 +15,13 @@ pub fn part1(pairs: List(String)) {
       _, _, _, _ -> False
     }
   })
-  |> list.filter(bool.and(_, True))
   |> list.length
 }
 
-pub fn part2(pairs: List(String)) {
-  pairs
-  |> list.map(fn(pair) {
-    assert [[Ok(lhs_lower), Ok(lhs_upper)], [Ok(rhs_lower), Ok(rhs_upper)]] =
-      pair
-      |> string.split(on: ",")
-      |> list.map(fn(bounds) {
-        bounds
-        |> string.split(on: "-")
-        |> list.map(int.parse)
-      })
+pub fn part2(assignments: List(#(#(Int, Int), #(Int, Int)))) {
+  assignments
+  |> list.filter(fn(bounds) {
+    let #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper)) = bounds
 
     case lhs_lower, rhs_lower, lhs_upper, rhs_upper {
       _, _, _, _ if lhs_lower >= rhs_lower && lhs_upper <= rhs_upper -> True
@@ -49,20 +33,31 @@ pub fn part2(pairs: List(String)) {
       _, _, _, _ -> False
     }
   })
-  |> list.filter(bool.and(_, True))
   |> list.length
 }
 
 pub fn solution(_) {
   assert Ok(input) = file.read("data/day4/input.txt")
 
-  let pairs =
+  let assignments =
     input
     |> string.trim
     |> string.split(on: "\n")
+    |> list.map(fn(pair) {
+      assert [[Ok(lhs_lower), Ok(lhs_upper)], [Ok(rhs_lower), Ok(rhs_upper)]] =
+        pair
+        |> string.split(on: ",")
+        |> list.map(fn(bounds) {
+          bounds
+          |> string.split(on: "-")
+          |> list.map(int.parse)
+        })
 
-  io.debug(part1(pairs))
-  io.debug(part2(pairs))
+      #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper))
+    })
+
+  io.debug(part1(assignments))
+  io.debug(part2(assignments))
 
   Ok(0)
 }
