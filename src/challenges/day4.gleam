@@ -21,10 +21,7 @@ pub fn part2(assignments: List(#(#(Int, Int), #(Int, Int)))) {
   |> list.filter(fn(bounds) {
     let #(#(lhs_lower, lhs_upper), #(rhs_lower, rhs_upper)) = bounds
 
-    let min = int.min(lhs_upper, rhs_lower)
-    let max = int.max(lhs_lower, rhs_upper)
-
-    min == rhs_lower && max == rhs_upper
+    lhs_upper >= rhs_lower && lhs_lower <= rhs_upper
   })
   |> list.length
 }
