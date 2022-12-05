@@ -45,16 +45,12 @@ fn solve(
   instructions
   |> list.fold(crate_map, apply)
   |> map.to_list
-  |> list.fold(
-    "",
-    fn(acc, pair) {
-      let #(_, stack) = pair
-
-      assert Ok(top) = list.at(stack, list.length(stack) - 1)
-
-      acc <> top
-    },
-  )
+  |> list.map(fn(pair) {
+    let #(_, stack) = pair
+    assert Ok(top) = list.at(stack, list.length(stack) - 1)
+    top
+  })
+  |> string.join("")
 }
 
 fn part1(
