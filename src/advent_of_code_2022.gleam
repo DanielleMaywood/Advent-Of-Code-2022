@@ -5,6 +5,7 @@ import challenges/day2
 import challenges/day3
 import challenges/day4
 import challenges/day5
+import challenges/day6
 
 pub fn main() {
   glint.new()
@@ -38,6 +39,12 @@ pub fn main() {
     do: day5.solution,
     with: [],
     described: "Day 5 Challenge",
+  )
+  |> glint.add_command(
+    at: ["day6"],
+    do: day6.solution,
+    with: [],
+    described: "Day 6 Challenge",
   )
   |> glint.run(start_arguments())
 }
